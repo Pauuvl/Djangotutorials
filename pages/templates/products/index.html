@@ -1,0 +1,15 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<h1>{{ subtitle }}</h1>
+
+<ul class="list-group">
+  {% for product in products %}
+    <li class="list-group-item">
+      <a href="{% url 'product_detail' product.id %}">
+        {{ product.name }} - ${{ product.price }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
