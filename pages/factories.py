@@ -1,11 +1,21 @@
-import factory
-from .models import Product
+from django.shortcuts import render, redirect
+from django.views import View
 
 
-class ProductFactory(factory.django.DjangoModelFactory):
+def ImageViewFactory(image_storage):
 
-    class Meta:
-        model = Product
+    class ImageView(View):
+        template_name = 'images/index.html'
 
-    name = factory.Faker('company')
-    price = factory.Faker('random_int', min=200, max=9000)
+        def get(self, request):
+            image_url = request.session.get('image_url', '')
+            return render(request, self.template_name, {
+                'image_url': image_url
+            })
+
+        def post(self, request):
+            image_url = image_storage.store(request)
+            request.session['image_url'] = image_url
+            return redirect('image_index')
+
+    return ImageView

@@ -1,0 +1,22 @@
+{% extends 'pages/base.html' %}
+
+{% block title %} Image Storage - DI {% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-header">Upload image</div>
+    <div class="card-body">
+
+      <form action="{% url 'image_save' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="profile_image" />
+        <button type="submit">Submit</button>
+      </form>
+
+      <img src="{{ image_url }}" />
+
+    </div>
+  </div>
+</div>
+{% endblock %}
